@@ -42,6 +42,7 @@ var stats;
 var step = 0;
 var cubeGeometry;
 var cubeMaterial;
+var childCube;
 function init() {
     // Instantiate a new Scene object
     scene = new Scene();
@@ -57,14 +58,12 @@ function init() {
     scene.add(plane);
     console.log("Added Plane Primitive to scene...");
     //Add a Cube to the Scene
-    cubeMaterial = new LambertMaterial({ color: 0x00ff00 });
-    cubeGeometry = new CubeGeometry(2, 2, 2);
-    cube = new Mesh(cubeGeometry, cubeMaterial);
-    cube.castShadow = true;
-    cube.receiveShadow = true;
-    cube.position.y = 1;
+    cube = new gameObject(new CubeGeometry(8, 8, 8), new LambertMaterial({ color: 0xff35ff }), 0, 4, 0);
     scene.add(cube);
     console.log("Added Cube Primitive to scene...");
+    childCube = new gameObject(new CubeGeometry(2, 2, 2), new LambertMaterial({ color: 0xff0000 }), 10, 0, 0);
+    cube.add(childCube);
+    console.log("Added Child Cube Primitive to cube object...");
     // Add an AmbientLight to the scene
     ambientLight = new AmbientLight(0x090909);
     scene.add(ambientLight);

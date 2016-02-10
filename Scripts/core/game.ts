@@ -44,9 +44,9 @@ var control: Control;
 var gui: GUI;
 var stats: Stats;
 var step: number = 0;
-var cubeGeometry:CubeGeometry;
-var cubeMaterial:LambertMaterial;
-
+var cubeGeometry: CubeGeometry;
+var cubeMaterial: LambertMaterial;
+var childCube: Mesh;
 
 function init() {
     // Instantiate a new Scene object
@@ -73,16 +73,21 @@ function init() {
     console.log("Added Plane Primitive to scene...");
     
     //Add a Cube to the Scene
-    cubeMaterial = new LambertMaterial({color:0x00ff00});
-    cubeGeometry = new CubeGeometry(2, 2, 2);
-    cube = new Mesh(cubeGeometry, cubeMaterial);
-    cube.castShadow = true;
-    cube.receiveShadow = true;
-    cube.position.y = 1;
-    
+    cube = new gameObject(
+        new CubeGeometry(8, 8, 8),
+        new LambertMaterial({ color: 0xff35ff }),
+        0, 4, 0);
+
     scene.add(cube);
     console.log("Added Cube Primitive to scene...");
     
+    childCube = new gameObject(
+        new CubeGeometry(2, 2, 2),
+        new LambertMaterial({ color: 0xff0000 }),
+        10, 0, 0);
+
+    cube.add(childCube)
+    console.log("Added Child Cube Primitive to cube object...");
     
     // Add an AmbientLight to the scene
     ambientLight = new AmbientLight(0x090909);
@@ -121,7 +126,7 @@ function onResize(): void {
 }
 
 function addControl(controlObject: Control): void {
-    gui.add(controlObject, 'rotationSpeed',-0.5,0.5);
+    gui.add(controlObject, 'rotationSpeed', -0.5, 0.5);
 }
 
 function addStatsObject() {
